@@ -51,7 +51,7 @@ public class PersistenceService {
 
         try {
             byte[] encoded = new byte[0];
-            encoded = Files.toByteArray(new File(GAME_DATA));
+            encoded = Files.toByteArray(new File(fileName));
             String gameData = new String(encoded, StandardCharsets.UTF_8);
             persistenceData = loadGameDataFromString(gameData);
 
@@ -68,10 +68,6 @@ public class PersistenceService {
     static PersistenceData  loadGameDataFromString(String gameDataAsStr) throws IOException {
          ObjectMapper mapper = new ObjectMapper();
          return mapper.readValue(gameDataAsStr, PersistenceData.class);
-    }
-
-    void initServices() {
-
     }
 
 }
