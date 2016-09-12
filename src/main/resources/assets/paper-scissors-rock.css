@@ -1,0 +1,64 @@
+
+body {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    #background-color: #F8F0DD;
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {
+    margin: 30px;
+    font-size: 40px;
+}
+
+h2 {
+    margin: 30px;
+    font-size: 30px;
+}
+
+.done-processing {
+    color: grey;
+}
+
+.user-input-element {
+    margin-top : 10px;
+}
+
+.user-input-element.div {
+    margin-bottom: 20px;
+}
+
+.fight-button-parent {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.fight-result{
+    height: 40px;
+}
+.pre-fight {
+    display: none;
+}
+
+.current-fight {
+    display: block;
+}
+
+.createuser {
+    margin: 20px;
+    width: 90px;
+    height: 40px;
+    font-size: 10px;
+}
+.fight-type-option {
+    margin: 5px;
+}
+.fight-button {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 5px;
+    width: 90px;
+    height: 40px;
+    font-size: 20px;
+}
