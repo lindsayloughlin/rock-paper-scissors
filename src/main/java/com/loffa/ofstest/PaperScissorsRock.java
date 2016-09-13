@@ -1,5 +1,6 @@
 package com.loffa.ofstest;
 
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.loffa.ofstest.api.PersistenceService;
 import com.loffa.ofstest.health.PSRHealthChecker;
 import com.loffa.ofstest.resources.GameController;
@@ -55,6 +56,7 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
         PSRHealthChecker psrHealth = new PSRHealthChecker();
         environment.healthChecks().register("psr-health", psrHealth);
 
+        environment.getObjectMapper().registerModule(new JodaModule());
         environment.jersey().register(new PlayerController());
         environment.jersey().register(new GameController());
 

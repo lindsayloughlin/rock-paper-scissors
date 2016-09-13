@@ -58,9 +58,10 @@ public class PersistenceService {
         } catch (IOException e) {
             // Probably doesn't exist.
             //TODO: log out the file location.
+        }
+        if (persistenceData == null) {
             persistenceData = new PersistenceData(new ArrayList<>(), new ArrayList<>());
         }
-
         PlayerService.createFromPlayers(persistenceData.players);
         GameResultService.createInstanceFrom(persistenceData.gamesPlayed);
     }

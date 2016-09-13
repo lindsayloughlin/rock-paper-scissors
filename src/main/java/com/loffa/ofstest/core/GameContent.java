@@ -11,13 +11,13 @@ public class GameContent {
 
     // TODO: make an array Of Players.
     @JsonProperty("player_one_move")
-    MoveMade playerOneMove;
+    public final MoveMade playerOneMove;
     @JsonProperty("player_two_move")
-    MoveMade playerTwoMove;
+    public final MoveMade playerTwoMove;
     @JsonProperty("player_one_result")
-    GameResultType resultType;
+    public final GameResultType resultType;
     @JsonProperty("game_time")
-    DateTime gameTime;
+    public final DateTime gameTime;
 
     public GameContent(@JsonProperty("player_one_move") MoveMade playerOneMove,
                        @JsonProperty("player_two_move") MoveMade playerTwoMove,
@@ -33,7 +33,7 @@ public class GameContent {
         playerOneMove = builder.playerOneMove;
         playerTwoMove = builder.playerTwoMove;
         resultType = builder.resultType;
-        gameTime = builder.gameTime;
+        gameTime = builder.gameTime != null ? builder.gameTime : DateTime.now();
     }
 
     public static Builder newBuilder() {
@@ -50,7 +50,7 @@ public class GameContent {
         private Builder() {
         }
 
-        public Builder withPlayerOneMove(MoveMade val) {
+        public Builder  withPlayerOneMove(MoveMade val) {
             playerOneMove = val;
             return this;
         }
