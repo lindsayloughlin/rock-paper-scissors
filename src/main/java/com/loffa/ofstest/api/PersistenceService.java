@@ -14,11 +14,10 @@ import java.util.ArrayList;
  */
 public class PersistenceService {
 
-    PersistenceData persistenceData;
-
-    PlayerService playerService;
-
     final static String GAME_DATA = "game-data.json";
+
+    PersistenceData persistenceData;
+    ObjectMapper jacksonMapper;
 
     private static PersistenceService instance;
 
@@ -38,16 +37,21 @@ public class PersistenceService {
         }
     }
 
-    public void loadFromDefaultFile() {
+    public void setJsonMapper(ObjectMapper objectMapper ) {
+        this.jacksonMapper = objectMapper;
+    }
+
+    public void loadDataFromJson() {
+
         loadGameData(GAME_DATA);
     }
 
     void saveDataToFile(String fileName) throws IOException {
-        String outputStr = (new ObjectMapper()).writeValueAsString(persistenceData);
+        String outputStr = jacksonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(persistenceData);
         Files.write(outputStr, new File(fileName), StandardCharsets.UTF_8);
     }
 
-    void loadGameData(String fileName) {
+    private void loadGameData(String fileName) {
 
         try {
             byte[] encoded = new byte[0];
@@ -66,9 +70,8 @@ public class PersistenceService {
         GameResultService.createInstanceFrom(persistenceData.gamesPlayed);
     }
 
-    static PersistenceData  loadGameDataFromString(String gameDataAsStr) throws IOException {
-         ObjectMapper mapper = new ObjectMapper();
-         return mapper.readValue(gameDataAsStr, PersistenceData.class);
+     PersistenceData  loadGameDataFromString(String gameDataAsStr) throws IOException {
+         return jacksonMapper.readValue(gameDataAsStr, PersistenceData.class);
     }
 
 }

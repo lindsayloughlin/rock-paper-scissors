@@ -1,7 +1,10 @@
 package com.loffa.ofstest.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.loffa.ofstest.core.PersistenceData;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -11,28 +14,20 @@ import java.io.IOException;
  */
 public class PersistenceServiceTest {
 
+    PersistenceService instance;
+    @Before
+    public void setupObjectMapper() {
+        instance = PersistenceService.getInstance();
+        instance.setJsonMapper(new ObjectMapper().registerModule(new JodaModule()));
+    }
+
     @Test
     public void shouldLoadGameData() throws IOException {
 
         String emptyGameData = "{}";
-        PersistenceData persistenceData = PersistenceService.loadGameDataFromString(emptyGameData);
+        PersistenceData persistenceData = instance.loadGameDataFromString(emptyGameData);
         Assert.assertNotNull(persistenceData);
         Assert.assertNotNull(persistenceData.gamesPlayed);
         Assert.assertNotNull(persistenceData.players);
-
-    }
-
-    @Test
-    public void shouldHandleFileNotAvailable() throws IOException {
-        PersistenceService instance = PersistenceService.getInstance();
-        instance.loadGameData("/hello-world/not-a-file");
-        //Assert.assertEquals(0, instance..size());
-    }
-
-    @Test
-    public void shouldBeAbleToWriteToFile() {
-        String testRunFile = "/tmp/test-run.json";
-
-
     }
 }

@@ -75,7 +75,7 @@ $(document).ready(function () {
             contentType: 'application/json',
         }).done(function(data) {
             if (data !== undefined) {
-                $('topplayers').empty();
+                $('#topplayers').empty();
                 data.forEach(function(entry){
                     $('#topplayers').append('<li>' + entry.username + ' ' + entry.wins  + '</li>');
                 });

@@ -9,17 +9,7 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.dropwizard.views.View;
 import io.dropwizard.views.ViewBundle;
-import org.eclipse.jetty.servlets.CrossOriginFilter;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.EnumSet;
 
 public class PaperScissorsRock extends Application<PlayerScissorsRockConfiguration> {
 
@@ -39,26 +29,31 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
         // TODO: application initialization
 
         //bootstrap.addBundle(new AssetsBundle());
-
         // load the persistence data if required.
         bootstrap.addBundle(new ViewBundle<PlayerScissorsRockConfiguration>());
         bootstrap.addBundle(new AssetsBundle());
-
-        PersistenceService.getInstance().loadFromDefaultFile();
     }
 
     @Override
     public void run(final PlayerScissorsRockConfiguration configuration,
                     final Environment environment) {
 
-//        FilterRegistration.Dynamic filter = environment.servlets().addFilter("crossOriginRequests", CrossOriginFilter.class);
-//        filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         PSRHealthChecker psrHealth = new PSRHealthChecker();
         environment.healthChecks().register("psr-health", psrHealth);
 
-        environment.getObjectMapper().registerModule(new JodaModule());
+        JodaModule jodaModule = new JodaModule();
+        environment.getObjectMapper().registerModule(jodaModule);
+        environment.getObjectMapper().configure(com.fasterxml.jackson.databind.SerializationFeature.
+                WRITE_DATES_AS_TIMESTAMPS , false);
+
+        PersistenceService instance = PersistenceService.getInstance();
+        instance.setJsonMapper(environment.getObjectMapper());
+        instance.loadDataFromJson();;
+
         environment.jersey().register(new PlayerController());
         environment.jersey().register(new GameController());
+
+
 
     }
 
