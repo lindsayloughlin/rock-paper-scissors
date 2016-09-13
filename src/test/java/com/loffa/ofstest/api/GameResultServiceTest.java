@@ -1,6 +1,5 @@
 package com.loffa.ofstest.api;
 
-import com.google.common.collect.ImmutableList;
 import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
@@ -27,12 +26,12 @@ public class GameResultServiceTest {
 
     @Test
     public void shouldBeatPaperWithScissors() {
-        Assert.assertEquals(GameResultType.Win, GameResultService.doesFirstBeatSecond(MoveType.Scissor, MoveType.Paper));
+        Assert.assertEquals(GameResultType.Win, GameResultService.doesFirstBeatSecond(MoveType.Scissors, MoveType.Paper));
     }
 
     @Test
     public void shouldBeatScissorsWithRock() {
-        Assert.assertEquals(GameResultType.Win, GameResultService.doesFirstBeatSecond(MoveType.Rock, MoveType.Scissor));
+        Assert.assertEquals(GameResultType.Win, GameResultService.doesFirstBeatSecond(MoveType.Rock, MoveType.Scissors));
     }
 
     @Test
@@ -132,7 +131,7 @@ public class GameResultServiceTest {
                             .withPlayerTwoMove(
                                     MoveMade.newBuilder()
                                             .withUsername("not-winner")
-                                            .withMoveType(MoveType.Scissor)
+                                            .withMoveType(MoveType.Scissors)
                                             .build()
                             ).build()
             );

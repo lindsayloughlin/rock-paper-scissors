@@ -43,8 +43,8 @@ $(document).ready(function () {
     $('#paper').on('click', function() {
         playGameWithMove('Paper');
     });
-    $('#Scissors').on('click', function() {
-        playGameWithMove('Scissor');
+    $('#scissors').on('click', function() {
+        playGameWithMove('Scissors');
     });
 
     $('#createplayerparent').submit(function (e) {

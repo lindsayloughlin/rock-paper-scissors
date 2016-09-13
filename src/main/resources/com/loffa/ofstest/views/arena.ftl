@@ -9,4 +9,4 @@
 
         <#include "fighthistory.html">
     </div>
-</html>
+</html>c

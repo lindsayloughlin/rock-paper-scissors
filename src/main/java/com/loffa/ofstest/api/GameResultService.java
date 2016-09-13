@@ -152,7 +152,7 @@ public class GameResultService {
             } else {
                 return GameResultType.Loss;
             }
-        } else if (first == MoveType.Scissor) {
+        } else if (first == MoveType.Scissors) {
             if (second == MoveType.Paper) {
                 return GameResultType.Win;
             } else {
@@ -160,7 +160,7 @@ public class GameResultService {
             }
         } else {
             // ROCK path.
-            if (second == MoveType.Scissor) {
+            if (second == MoveType.Scissors) {
                 return GameResultType.Win;
             } else {
                 return GameResultType.Loss;

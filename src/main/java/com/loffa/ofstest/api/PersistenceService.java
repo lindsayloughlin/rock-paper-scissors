@@ -17,13 +17,14 @@ public class PersistenceService {
     final static String GAME_DATA = "game-data.json";
 
     PersistenceData persistenceData;
-    ObjectMapper jacksonMapper;
-
+    
+    static ObjectMapper jacksonMapper;
     private static PersistenceService instance;
 
     public static synchronized PersistenceService getInstance() {
         if (instance == null) {
             instance = new PersistenceService();
+            jacksonMapper = new ObjectMapper();
         }
         return instance;
     }

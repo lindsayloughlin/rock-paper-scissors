@@ -5,9 +5,8 @@ package com.loffa.ofstest.core.enums;
  */
 public enum MoveType {
     Paper,
-    Scissor,
+    Scissors,
     Rock
-
 }
 
 
