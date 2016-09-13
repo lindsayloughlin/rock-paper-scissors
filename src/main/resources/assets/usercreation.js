@@ -18,7 +18,7 @@ $(document).ready(function () {
     }
 
     function onGameFinished(data) {
-        var list = "<li>Your move " + data.player_one_move.move + " their move " + data.player_two_move.move + " you " + data.player_one_result + "</li>";
+        var list = "<li>" +  data.player_one_result +  ": Your move " + data.player_one_move.move + " their move " + data.player_two_move.move +  "</li>";
         $('#yourresultshere').append(list);
     }
 
@@ -65,6 +65,33 @@ $(document).ready(function () {
         });
 
     });
+
+    // TODO: replace with some sort of socket situation
+    function updateHighScore() {
+        clearInterval(interval);
+        $.ajax({
+            type: 'GET',
+            url: '../game/highscore',
+            contentType: 'application/json',
+        }).done(function(data) {
+            if (data !== undefined) {
+                $('topplayers').empty();
+                data.forEach(function(entry){
+                    $('#topplayers').append('<li>' + entry.username + ' ' + entry.wins  + '</li>');
+                });
+
+            }
+        }).fail(function() {
+            // possibly put in a backoff.
+            console.log("failed getting hight score list");
+        }).always(function() {
+            interval = setInterval( updateHighScore , 5000);
+        });
+    }
+
+    var interval = setInterval( updateHighScore , 5000);
+    updateHighScore();
+
 });
 
 
