@@ -17,8 +17,7 @@ public class PersistenceServiceTest {
     PersistenceService instance;
     @Before
     public void setupObjectMapper() {
-        instance = PersistenceService.getInstance();
-        instance.setJsonMapper(new ObjectMapper().registerModule(new JodaModule()));
+        instance = new PersistenceService(new ObjectMapper().registerModule(new JodaModule()));
     }
 
     @Test

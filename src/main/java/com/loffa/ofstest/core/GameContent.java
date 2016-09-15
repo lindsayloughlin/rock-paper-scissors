@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
  */
 public class GameContent {
 
-    // TODO: make an array Of Players.
+    // TODO: make an array Of players so we can play with more than two people?
     @JsonProperty("player_one_move")
     public final MoveMade playerOneMove;
     @JsonProperty("player_two_move")
@@ -27,6 +27,10 @@ public class GameContent {
         this.playerTwoMove = playerTwoMove;
         this.resultType = resultType;
         this.gameTime = gameTime;
+    }
+
+    public MoveMade[] getPlayersMoves() {
+        return new MoveMade[] { playerOneMove, playerTwoMove };
     }
 
     private GameContent(Builder builder) {

@@ -1,13 +1,16 @@
 package com.loffa.ofstest.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
+import com.google.common.collect.ImmutableList;
 import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
 import com.loffa.ofstest.core.enums.GameResultType;
 import com.loffa.ofstest.core.enums.MoveType;
 import org.joda.time.DateTime;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,10 +21,12 @@ import java.util.List;
  */
 public class GameResultServiceTest {
 
-    @After
-    public void removeData() {
-        GameResultService.getInstance().removeData();
-        ;
+    GameResultService resultService;
+
+    @Before()
+    public void setupGameService()
+    {
+        resultService = new GameResultService(new PersistenceService(new ObjectMapper()));
     }
 
     @Test
@@ -50,7 +55,7 @@ public class GameResultServiceTest {
     public void shouldRestrictHighScoresToAnHourOld() {
 
         DateTime lastYear = (new DateTime()).minusYears(1);
-        GameResultService resultService = GameResultService.getInstance();
+
         List<GameContent> gameResults = resultService.getGameResults();
         gameResults.add(
                 GameContent.newBuilder()
@@ -66,7 +71,7 @@ public class GameResultServiceTest {
 
     @Test
     public void shouldAllowHighScoresUpToAnHourAgo() {
-        GameResultService resultService = GameResultService.getInstance();
+
         List<GameContent> gameResults = resultService.getGameResults();
         gameResults.add(
                 GameContent.newBuilder()
@@ -81,21 +86,51 @@ public class GameResultServiceTest {
 
     @Test
     public void shouldGetValidResultAgainstRandom() {
-        GameResultService gameResultService = GameResultService.getInstance();
-        GameContent gameResult = gameResultService
+
+        GameContent gameResult = resultService
                 .performRandomGameForUser(
                         MoveMade.newBuilder()
                                 .withMoveType(MoveType.Paper)
                                 .withUsername("johhny")
                                 .build());
         Assert.assertNotNull(gameResult);
-        Assert.assertEquals(1, gameResultService.getGameResults().size());
+        Assert.assertEquals(1, resultService.getGameResults().size());
     }
 
     @Test
-    public void shouldFilterResults() {
-
+    public void shouldNotGivePredictionForSmallResultSet() {
+        Optional<MoveType> predictedMove = GameResultService.getPredictedMove(ImmutableList.of(MoveType.Paper));
+        Assert.assertFalse(predictedMove.isPresent());
     }
+
+    @Test
+    public void shouldGivePatternMatchedAnswerAllSame() {
+
+        Optional<MoveType> predictedMove = GameResultService.getPredictedMove(ImmutableList.of(
+                MoveType.Paper, MoveType.Paper, MoveType.Paper, MoveType.Paper
+        ));
+        Assert.assertTrue(predictedMove.isPresent());
+        Assert.assertEquals(MoveType.Paper, predictedMove.get());
+    }
+
+    @Test
+    public void shouldNotFindPattern() {
+
+        List<MoveType> movesMade = new ArrayList<MoveType>();
+        for (int i = 0; i < 10; i++ ) {
+            movesMade.add(MoveType.Rock);
+            movesMade.add(MoveType.Rock);
+            movesMade.add(MoveType.Scissors);
+        }
+        //movesMade.add(MoveType.Paper);
+        movesMade.add(MoveType.Paper);
+        movesMade.add(MoveType.Paper);
+        movesMade.add(MoveType.Paper);
+
+        Optional<MoveType> predictedMove = GameResultService.getPredictedMove(movesMade);
+        Assert.assertFalse(predictedMove.isPresent());
+    }
+
 
     @Test
     public void shouldShowHighScoreShouldNotIncludeDraw() {
@@ -111,10 +146,6 @@ public class GameResultServiceTest {
         Assert.assertEquals("less-good", lessScore.getUsername());
     }
 
-    @Test
-    public void shouldSortNumberOfResultsCorrectly() {
-
-    }
 
     private List<GameContent> fixtureWinList(int number, String username) {
         List<GameContent> list = new ArrayList<>();

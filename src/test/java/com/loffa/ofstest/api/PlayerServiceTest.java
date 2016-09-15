@@ -1,5 +1,6 @@
 package com.loffa.ofstest.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loffa.ofstest.core.Player;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,7 +18,7 @@ public class PlayerServiceTest {
 
     @Before
     public void setupPlayerService() {
-        playerService = new PlayerService(new ArrayList<>());
+        playerService = new PlayerService(new PersistenceService(new ObjectMapper()));
     }
 
     @Test

@@ -1,7 +1,9 @@
 package com.loffa.ofstest;
 
 import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.loffa.ofstest.api.GameResultService;
 import com.loffa.ofstest.api.PersistenceService;
+import com.loffa.ofstest.api.PlayerService;
 import com.loffa.ofstest.health.PSRHealthChecker;
 import com.loffa.ofstest.resources.GameController;
 import com.loffa.ofstest.resources.PlayerController;
@@ -46,12 +48,12 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
         environment.getObjectMapper().configure(com.fasterxml.jackson.databind.SerializationFeature.
                 WRITE_DATES_AS_TIMESTAMPS , false);
 
-        PersistenceService instance = PersistenceService.getInstance();
-        instance.setJsonMapper(environment.getObjectMapper());
-        instance.loadDataFromJson();;
+        PersistenceService instance = new PersistenceService(environment.getObjectMapper());
+        instance.loadDataFromJson();
 
-        environment.jersey().register(new PlayerController());
-        environment.jersey().register(new GameController());
+        PlayerService playerService = new PlayerService(instance);
+        environment.jersey().register(new PlayerController(playerService));
+        environment.jersey().register(new GameController(new GameResultService(instance), playerService));
 
 
 

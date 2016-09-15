@@ -1,1 +1,0 @@
-<h3>Top score view</h3>

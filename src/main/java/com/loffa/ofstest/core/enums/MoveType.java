@@ -6,7 +6,13 @@ package com.loffa.ofstest.core.enums;
 public enum MoveType {
     Paper,
     Scissors,
-    Rock
+    Rock;
+
+    public MoveType getWinningMove() {
+        if (this == Paper) return Scissors;
+        if (this == Scissors) return Rock;
+        return Paper;
+    }
 }
 
 

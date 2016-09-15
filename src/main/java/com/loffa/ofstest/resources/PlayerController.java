@@ -17,11 +17,14 @@ import javax.ws.rs.core.Response;
 @Path("/player/")
 public class PlayerController {
 
+    final PlayerService service;
+    public PlayerController(PlayerService service) {
+        this.service =service;
+    }
+
     @POST
     public Response addPlayer(Player player) {
-
-        PlayerService instance = PlayerService.getInstance();
-        if (instance.addPlayer(player)) {
+        if (service.addPlayer(player)) {
             return Response.ok().build();
         }
         return Response.serverError().build();
@@ -30,9 +33,9 @@ public class PlayerController {
     @GET
     @Path("{username}/info")
     public Player getPlayerInfo(@PathParam("username") String username) throws Exception {
-        PlayerService instance = PlayerService.getInstance();
-        if (instance.getPlayersMap().containsKey(username)) {
-            return instance.getPlayersMap().get(username);
+
+        if (service.getPlayersMap().containsKey(username)) {
+            return service.getPlayersMap().get(username);
         }
         throw new Exception("Unable to find user " + username);
     }
@@ -40,7 +43,6 @@ public class PlayerController {
     @GET
     @Path("all")
     public PlayersView getPlayerView(@PathParam("username") String username) throws Exception {
-        PlayerService instance = PlayerService.getInstance();
-        return new PlayersView(instance.getValidPlayers());
+        return new PlayersView(service.getValidPlayers());
     }
 }

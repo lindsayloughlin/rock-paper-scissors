@@ -1,5 +1,7 @@
 package com.loffa.ofstest.api;
 
+
+import com.google.common.base.Optional;
 import com.google.common.collect.ArrayListMultimap;
 import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.HighScore;
@@ -13,6 +15,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -20,18 +24,16 @@ import java.util.Random;
  */
 public class GameResultService {
 
-    private List<GameContent> gameResults = new ArrayList<>();
+    PersistenceService persistenceService;
 
-    private static GameResultService instance;
-
-    public static synchronized GameResultService getInstance() {
-        if (instance == null) {
-            instance = new GameResultService(new ArrayList<>());
-        }
-        return instance;
+    public GameResultService(PersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+        this.gameResults = persistenceService.getGames();
     }
 
-    public  void removeData() {
+    private List<GameContent> gameResults = new ArrayList<>();
+
+    public void removeData() {
         getGameResults().clear();
     }
 
@@ -39,32 +41,99 @@ public class GameResultService {
         return gameResults;
     }
 
-    public GameResultService(List<GameContent> gameResults) {
-        this.gameResults = gameResults;
+    public GameContent performPatternMatchedGame(MoveMade humanMove) {
+        List<MoveType> allMoves = moveListForUser(humanMove.username);
+
+        Optional<MoveType> predictedMove = getPredictedMove(allMoves);
+
+        MoveType actualMoveType;
+        if (predictedMove.isPresent()) {
+            actualMoveType = predictedMove.get().getWinningMove();
+        } else {
+            actualMoveType = generateRandomMove();
+        }
+        GameContent gameContent = createGameFromMoves(humanMove, MoveMade.newBuilder()
+                .withMoveType(actualMoveType)
+                .withUsername("cpu-pattern")
+                .build());
+        return gameContent;
     }
 
-    public GameContent performRandomGameForUser(MoveMade moveMade) {
+    static Optional<MoveType> getPredictedMove(List<MoveType> allMoves) {
+
+        int patternSize = 3;
+        if (allMoves.size() < patternSize + 1) {
+            return Optional.absent();
+        }
+
+        // No need to do pattern matching fallback to random.
+        List<MoveType> recentMoves = allMoves.subList(allMoves.size() - patternSize, allMoves.size());
+        // Grab the most lest recent to most recent list
+        //for (int index = moveTypes.size() -1; index >= 0;  --index) {
+        List<MoveType> matchingMoves = new ArrayList<MoveType>();
+        Optional<MoveType> movePrediction = Optional.absent();
+        for (int index = 0; index < (allMoves.size() - recentMoves.size()); ++index) {
+            int matches = 0;
+            for (int inner = 0; inner < recentMoves.size(); ++inner) {
+
+                if (recentMoves.get(inner) == allMoves.get(index + inner)) {
+                    ++matches;
+                }
+            }
+            if (matches == recentMoves.size() && (index + 1) < allMoves.size()) {
+                // Most likely move that the player will make
+                matchingMoves.add(allMoves.get(index + 1));
+            }
+        }
+
+        int moveCount = 0;
+        Optional<MoveType> mostLikely = Optional.absent();
+        for (MoveType moveCheck : MoveType.values()) {
+            int frequency = Collections.frequency(matchingMoves, moveCheck);
+            if (frequency > moveCount) {
+                moveCount = frequency;
+                mostLikely = Optional.of(moveCheck);
+            }
+        }
+        return mostLikely;
+    }
+
+    private List<MoveType> moveListForUser(String username) {
+
+        List<MoveType> movesForUser = new ArrayList<>();
+        for (GameContent content : gameResults) {
+            for (MoveMade move : content.getPlayersMoves())
+                if (move.username.equals(username)) {
+                    movesForUser.add(content.playerOneMove.moveType);
+                }
+        }
+        return movesForUser;
+    }
+
+    public GameContent performRandomGameForUser(MoveMade humanMove) {
         MoveType randomMove = generateRandomMove();
         MoveMade cpuMove = MoveMade.newBuilder()
                 .withMoveType(randomMove)
                 .withUsername("cpu")
                 .build();
+        GameContent gameFromMoves = createGameFromMoves(humanMove, cpuMove);
+        return gameFromMoves;
+    }
+
+    private GameContent createGameFromMoves(MoveMade playerOne, MoveMade playerTwo) {
+        MoveType randomMove = generateRandomMove();
         GameContent gameContent = GameContent
                 .newBuilder()
-                .withPlayerOneMove(moveMade)
-                .withPlayerTwoMove(cpuMove)
-                .withResultType(doesFirstBeatSecond(moveMade.moveType, randomMove))
+                .withPlayerOneMove(playerOne)
+                .withPlayerTwoMove(playerTwo)
+                .withResultType(doesFirstBeatSecond(playerOne.moveType, playerTwo.moveType))
                 .withGameType(DateTime.now())
                 .build();
         gameResults.add(gameContent);
-        PersistenceService.getInstance().saveToDefaultFile();
+        persistenceService.saveToDefaultFile();
         return gameContent;
     }
 
-    public static synchronized GameResultService createInstanceFrom(List<GameContent> gameContent) {
-        instance = new GameResultService(gameContent);
-        return instance;
-    }
 
     public List<HighScore> getRecentHighScoreList(int maxPlaces) {
         List<GameContent> gamesPlayedUpHoursAgo = getGamesPlayedUpHoursAgo(1);
@@ -145,28 +214,11 @@ public class GameResultService {
         if (first == second) {
             return GameResultType.Draw;
         }
-        if (first == MoveType.Paper) {
-
-            if (second == MoveType.Rock) {
-                return GameResultType.Win;
-            } else {
-                return GameResultType.Loss;
-            }
-        } else if (first == MoveType.Scissors) {
-            if (second == MoveType.Paper) {
-                return GameResultType.Win;
-            } else {
-                return GameResultType.Loss;
-            }
-        } else {
-            // ROCK path.
-            if (second == MoveType.Scissors) {
-                return GameResultType.Win;
-            } else {
-                return GameResultType.Loss;
-            }
+        if (first.getWinningMove() == second) {
+            return GameResultType.Loss;
         }
-        //throw new Exception("Unknown MoveType type for " + first);
+
+        return GameResultType.Win;
     }
 
 

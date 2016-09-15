@@ -8,12 +8,10 @@ import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
 import com.loffa.ofstest.core.enums.MoveType;
 import com.loffa.ofstest.views.ArenaView;
-import com.loffa.ofstest.views.GamesView;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -23,6 +21,14 @@ import java.util.List;
  */
 @Path("/game/")
 public class GameController {
+
+    final GameResultService resultService;
+    final PlayerService playerService;
+    public GameController(GameResultService resultService,
+                          PlayerService playerService) {
+        this.resultService = resultService;
+        this.playerService = playerService;
+    }
 
     public static class AuthMove {
 
@@ -51,25 +57,10 @@ public class GameController {
     }
 
     @GET
-    @Path("/all/")
-    @Produces(MediaType.TEXT_HTML)
-    public GamesView getGamesData() {
-        return new GamesView();
-    }
-
-    @GET
-    @Path("/content/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public GameContent getGameByNumber(@PathParam("gamenumber") Integer gameNumber) {
-        return null;
-    }
-
-
-    @GET
     @Path("/highscore/")
     @Produces(MediaType.APPLICATION_JSON)
     public List<HighScore> highScoreList() {
-        return GameResultService.getInstance().getRecentHighScoreList(10);
+        return resultService.getRecentHighScoreList(10);
     }
 
     @POST
@@ -77,11 +68,8 @@ public class GameController {
     @Produces(MediaType.APPLICATION_JSON)
     public GameContent playAgainstRandomComputer(AuthMove moveMade) throws Exception {
 
-        if (!PlayerService.getInstance().validatePlayerPassword(moveMade.username, moveMade.password)) {
-            throw new Exception("can't find player " + moveMade.username);
-        }
-
-        GameContent gameContent = GameResultService.getInstance().performRandomGameForUser(
+        getPlayerCredential(moveMade);
+        GameContent gameContent = resultService.performRandomGameForUser(
                 MoveMade.newBuilder()
                         .withUsername(moveMade.username)
                         .withMoveType(moveMade.moveType)
@@ -89,5 +77,23 @@ public class GameController {
         return gameContent;
     }
 
+    private void getPlayerCredential(AuthMove moveMade) throws Exception {
+        if (!playerService.validatePlayerPassword(moveMade.username, moveMade.password)) {
+            throw new Exception("can't find player " + moveMade.username);
+        }
+    }
 
+    @POST
+    @Path("/playpattern")
+    @Produces(MediaType.APPLICATION_JSON)
+    public GameContent playAgainstPatternMatchingComputer(AuthMove moveMade) throws Exception {
+        // Should be done in the filter layer.
+        getPlayerCredential(moveMade);
+        GameContent gameContent = resultService.performPatternMatchedGame(
+                MoveMade.newBuilder()
+                        .withUsername(moveMade.username)
+                        .withMoveType(moveMade.moveType)
+                        .build());
+        return gameContent;
+    }
 }

@@ -2,12 +2,15 @@ package com.loffa.ofstest.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
+import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.PersistenceData;
+import com.loffa.ofstest.core.Player;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lloughlin on 11/09/2016.
@@ -15,18 +18,24 @@ import java.util.ArrayList;
 public class PersistenceService {
 
     final static String GAME_DATA = "game-data.json";
-
-    PersistenceData persistenceData;
+    private PersistenceData persistenceData;
     
-    static ObjectMapper jacksonMapper;
-    private static PersistenceService instance;
+    private ObjectMapper jacksonMapper;
 
-    public static synchronized PersistenceService getInstance() {
-        if (instance == null) {
-            instance = new PersistenceService();
-            jacksonMapper = new ObjectMapper();
-        }
-        return instance;
+
+    public PersistenceService(ObjectMapper objectMapper) {
+        this.jacksonMapper = objectMapper;
+        persistenceData = PersistenceData.newBuilder()
+                .withGamesPlayed(new ArrayList<>())
+                .withPlayers(new ArrayList<>())
+                .build();
+    }
+
+    List<Player> getPlayers() {
+        return persistenceData.players;
+    }
+    List<GameContent> getGames() {
+        return persistenceData.gamesPlayed;
     }
 
     public void saveToDefaultFile() {
@@ -34,12 +43,8 @@ public class PersistenceService {
             saveDataToFile(GAME_DATA);
         }
         catch (IOException exception) {
-            // chill
+            System.out.println("unable to save to " + GAME_DATA);
         }
-    }
-
-    public void setJsonMapper(ObjectMapper objectMapper ) {
-        this.jacksonMapper = objectMapper;
     }
 
     public void loadDataFromJson() {
@@ -67,8 +72,6 @@ public class PersistenceService {
         if (persistenceData == null) {
             persistenceData = new PersistenceData(new ArrayList<>(), new ArrayList<>());
         }
-        PlayerService.createFromPlayers(persistenceData.players);
-        GameResultService.createInstanceFrom(persistenceData.gamesPlayed);
     }
 
      PersistenceData  loadGameDataFromString(String gameDataAsStr) throws IOException {

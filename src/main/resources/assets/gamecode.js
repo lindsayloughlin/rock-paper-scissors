@@ -25,16 +25,22 @@ $(document).ready(function () {
     function playGameWithMove(moveType) {
         var jsonData = {username: currentUserName, password: currentPassword,
                             move: moveType };
-        $.ajax({
-            type: 'POST',
-            url: '../game/playrandom/',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonData)
-        }).done(function(data) {
-            onGameFinished(data)
-        }).fail(function() {
-            console.log('failed to play game');
-        })
+
+        var fightType = $('input[name=fighttype]:checked').val()
+
+        // TODO: playhuman
+        if (fightType != 'playhuman') {
+            $.ajax({
+                type: 'POST',
+                url: '../game/' + fightType + '/',
+                contentType: 'application/json',
+                data: JSON.stringify(jsonData)
+            }).done(function (data) {
+                onGameFinished(data)
+            }).fail(function () {
+                console.log('failed to play game');
+            })
+        }
     }
 
     $('#rock').on('click', function() {
@@ -61,7 +67,7 @@ $(document).ready(function () {
             // What happened to success jquery?
             onPlayerCreated()
         ).fail(function () {
-            console.log("failed to create user")
+            console.log("failed to create user!!")
         });
 
     });
@@ -83,7 +89,7 @@ $(document).ready(function () {
             }
         }).fail(function() {
             // possibly put in a backoff.
-            console.log("failed getting hight score list");
+            console.log("failed getting high score list");
         }).always(function() {
             interval = setInterval( updateHighScore , 5000);
         });

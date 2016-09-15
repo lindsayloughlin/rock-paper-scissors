@@ -17,29 +17,18 @@ import java.util.Map;
  */
 public class PlayerService {
 
-    static PlayerService instance;
 
+    final List<Player> validPlayers;
+    final PersistenceService persistenceService;
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
-    public static synchronized PlayerService getInstance() {
-        if (instance == null) {
-            instance = new PlayerService(new ArrayList<>());
-        }
-        return instance;
+    public PlayerService(PersistenceService persistenceService) {
+        this.validPlayers = persistenceService.getPlayers();
+        this.persistenceService = persistenceService;
+        LOGGER.debug("Created player service with players: " + validPlayers);
     }
 
-    static void createFromPlayers(List<Player> players ) {
 
-        LOGGER.debug("Created player service with players: " + players);
-        instance = new PlayerService(players);
-
-    }
-
-    PlayerService(List<Player> players) {
-        this.validPlayers = players;
-    }
-
-    private List<Player> validPlayers;
 
     public boolean playerExists(String username) {
         return getPlayersMap().containsKey(username);
@@ -60,8 +49,7 @@ public class PlayerService {
     }
 
     public synchronized boolean  addPlayer(Player player) {
-
-        // todo: give some reasons why... possibly a list of errors?
+        // TODO: give some reasons why... possibly a list of errors?
         if (Strings.isNullOrEmpty(player.username)) {
             return false;
         }
@@ -73,7 +61,7 @@ public class PlayerService {
         }
 
         validPlayers.add(player);
-        PersistenceService.getInstance().saveToDefaultFile();
+        persistenceService.saveToDefaultFile();
         return true;
     }
 
