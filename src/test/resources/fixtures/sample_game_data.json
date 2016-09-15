@@ -1,0 +1,717 @@
+{
+  "players" : [ {
+    "username" : "test-user",
+    "password" : "test-password"
+  }, {
+    "username" : "hello2342",
+    "password" : "hello2323"
+  }, {
+    "username" : "asdfasdf",
+    "password" : "add"
+  } ],
+  "games" : [ {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:19.050Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:19.760Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:20.321Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:21.109Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:21.475Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:21.913Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:22.898Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:23.054Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:23.322Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:23.440Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:25.198Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:25.313Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:25.588Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:25.941Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:27.533Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:27.928Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:28.059Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:29.108Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:29.253Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:29.620Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:29.938Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:35.657Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:35.796Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:36.238Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:39.349Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:39.510Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:39.833Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:39.971Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:40.215Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:40.466Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:40.792Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:41.162Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:41.400Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:41.535Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:41.787Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:41.897Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:42.192Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:53:46.284Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:53:46.417Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:46.706Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:46.852Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:46.973Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.132Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.261Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.433Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.565Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.709Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.862Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:47.997Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:48.146Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:48.289Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:48.464Z"
+  }, {
+    "player_one_move" : {
+      "username" : "hello2342",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu-pattern",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:53:48.597Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:57:51.266Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:57:51.376Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T21:57:52.118Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:57:52.552Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T21:57:52.791Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T21:57:52.926Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T22:02:45.121Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Rock"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Loss",
+    "game_time" : "2016-09-15T22:02:45.613Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Scissors"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Scissors"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T22:02:46.004Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Paper"
+    },
+    "player_one_result" : "Draw",
+    "game_time" : "2016-09-15T22:02:46.419Z"
+  }, {
+    "player_one_move" : {
+      "username" : "asdfasdf",
+      "move" : "Paper"
+    },
+    "player_two_move" : {
+      "username" : "cpu",
+      "move" : "Rock"
+    },
+    "player_one_result" : "Win",
+    "game_time" : "2016-09-15T22:02:46.644Z"
+  } ]
+}

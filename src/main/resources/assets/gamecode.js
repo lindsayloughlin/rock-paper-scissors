@@ -28,7 +28,7 @@ $(document).ready(function () {
 
         var fightType = $('input[name=fighttype]:checked').val()
 
-        // TODO: playhuman
+        // TODO: play human with sockets.
         if (fightType != 'playhuman') {
             $.ajax({
                 type: 'POST',

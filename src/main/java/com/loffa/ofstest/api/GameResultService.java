@@ -150,16 +150,6 @@ public class GameResultService {
                 recentScore.add(game);
             }
         }
-//        List<GameContent> recentHighScore = Collections2.filter(gameResults, new Predicate<GameContent>() {
-//            @Override
-//            public boolean apply(GameContent gameContent) {
-//
-//                if (gameContent.gameTime == null) {
-//                    return false;
-//                }
-//                return cutOffDate.isBefore(gameContent.gameTime.getMillis());
-//            }
-//        });
 
         return recentScore;
     }
@@ -177,15 +167,15 @@ public class GameResultService {
                 winnerToGame.put(winner, content);
             }
         }
-        List<HighScore> unsortedScoreList = new ArrayList<>();
+        List<HighScore> highScoreList = new ArrayList<>();
         for (String player : winnerToGame.keySet()) {
-            unsortedScoreList.add(HighScore.newBuilder()
+            highScoreList.add(HighScore.newBuilder()
                     .withUsername(player)
                     .withWin(winnerToGame.get(player).size())
                     .build());
         }
 
-        Collections.sort(unsortedScoreList, new Comparator<HighScore>() {
+        Collections.sort(highScoreList, new Comparator<HighScore>() {
             @Override
             public int compare(HighScore o1, HighScore o2) {
                 if (o1.getWins() == o2.getWins()) {
@@ -197,7 +187,11 @@ public class GameResultService {
                 return -1;
             }
         });
-        return unsortedScoreList;
+
+        if (highScoreList.size() > numPlaces) {
+            highScoreList = highScoreList.subList(0, numPlaces);
+        }
+        return highScoreList;
     }
 
     private MoveType generateRandomMove() {

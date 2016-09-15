@@ -1,5 +1,6 @@
 package com.loffa.ofstest.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.loffa.ofstest.core.enums.GameResultType;
 import org.joda.time.DateTime;
@@ -29,6 +30,7 @@ public class GameContent {
         this.gameTime = gameTime;
     }
 
+    @JsonIgnore
     public MoveMade[] getPlayersMoves() {
         return new MoveMade[] { playerOneMove, playerTwoMove };
     }

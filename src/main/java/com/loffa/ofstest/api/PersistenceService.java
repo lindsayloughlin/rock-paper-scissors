@@ -48,7 +48,6 @@ public class PersistenceService {
     }
 
     public void loadDataFromJson() {
-
         loadGameData(GAME_DATA);
     }
 
@@ -59,15 +58,17 @@ public class PersistenceService {
 
     private void loadGameData(String fileName) {
 
-        try {
-            byte[] encoded = new byte[0];
-            encoded = Files.toByteArray(new File(fileName));
-            String gameData = new String(encoded, StandardCharsets.UTF_8);
-            persistenceData = loadGameDataFromString(gameData);
-
-        } catch (IOException e) {
-            // Probably doesn't exist.
-            //TODO: log out the file location.
+        if (new File(fileName).exists()) {
+            try {
+                byte[] encoded = Files.toByteArray(new File(fileName));
+                String gameData = new String(encoded, StandardCharsets.UTF_8);
+                persistenceData = loadGameDataFromString(gameData);
+            } catch (IOException e) {
+                // Probably doesn't exist.
+                //TODO: log out the file location.
+                System.out.println(e.getMessage());
+                throw new RuntimeException("Unable to load gamedata file " + fileName);
+            }
         }
         if (persistenceData == null) {
             persistenceData = new PersistenceData(new ArrayList<>(), new ArrayList<>());

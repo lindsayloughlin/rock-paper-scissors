@@ -23,15 +23,11 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
 
     @Override
     public String getName() {
-        return "osftest";
+        return "ofstest";
     }
 
     @Override
     public void initialize(final Bootstrap<PlayerScissorsRockConfiguration> bootstrap) {
-        // TODO: application initialization
-
-        //bootstrap.addBundle(new AssetsBundle());
-        // load the persistence data if required.
         bootstrap.addBundle(new ViewBundle<PlayerScissorsRockConfiguration>());
         bootstrap.addBundle(new AssetsBundle());
     }
@@ -54,9 +50,6 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
         PlayerService playerService = new PlayerService(instance);
         environment.jersey().register(new PlayerController(playerService));
         environment.jersey().register(new GameController(new GameResultService(instance), playerService));
-
-
-
     }
 
 }
