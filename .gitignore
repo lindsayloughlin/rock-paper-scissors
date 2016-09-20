@@ -1,1 +1,5 @@
 game-data.json
+*.iml
+.idea/*
+OFSFullStackCodeAssignment.pdf
+target/*
