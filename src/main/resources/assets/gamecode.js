@@ -23,7 +23,7 @@ $(document).ready(function () {
     }
 
     function playGameWithMove(moveType) {
-        var jsonData = {username: currentUserName, password: currentPassword,
+        var jsonData = {username: currentUserName,
                             move: moveType };
 
         var fightType = $('input[name=fighttype]:checked').val()
@@ -33,6 +33,8 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: '../game/' + fightType + '/',
+                username: currentUserName,
+                password: currentPassword,
                 contentType: 'application/json',
                 data: JSON.stringify(jsonData)
             }).done(function (data) {

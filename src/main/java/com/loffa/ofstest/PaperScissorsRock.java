@@ -4,11 +4,16 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.loffa.ofstest.api.GameResultService;
 import com.loffa.ofstest.api.PersistenceService;
 import com.loffa.ofstest.api.PlayerService;
+import com.loffa.ofstest.auth.UserAuthenticator;
+import com.loffa.ofstest.auth.UserAuthorizer;
+import com.loffa.ofstest.core.User;
 import com.loffa.ofstest.health.PSRHealthChecker;
+import io.dropwizard.auth.AuthDynamicFeature;
 import com.loffa.ofstest.resources.GameController;
 import com.loffa.ofstest.resources.PlayerController;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -30,6 +35,8 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
     public void initialize(final Bootstrap<PlayerScissorsRockConfiguration> bootstrap) {
         bootstrap.addBundle(new ViewBundle<PlayerScissorsRockConfiguration>());
         bootstrap.addBundle(new AssetsBundle());
+
+
     }
 
     @Override
@@ -43,6 +50,13 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
         environment.getObjectMapper().registerModule(jodaModule);
         environment.getObjectMapper().configure(com.fasterxml.jackson.databind.SerializationFeature.
                 WRITE_DATES_AS_TIMESTAMPS , false);
+
+        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<User>()
+                .setAuthenticator(new UserAuthenticator())
+                .setAuthorizer(new UserAuthorizer())
+                .setRealm("Authorized player section")
+                .buildAuthFilter()));
+
 
         PersistenceService instance = new PersistenceService(environment.getObjectMapper());
         instance.loadDataFromJson();

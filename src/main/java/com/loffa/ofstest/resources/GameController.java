@@ -1,14 +1,13 @@
 package com.loffa.ofstest.resources;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.loffa.ofstest.api.GameResultService;
 import com.loffa.ofstest.api.PlayerService;
 import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
-import com.loffa.ofstest.core.enums.MoveType;
 import com.loffa.ofstest.views.ArenaView;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -30,26 +29,6 @@ public class GameController {
         this.playerService = playerService;
     }
 
-    public static class AuthMove {
-
-        @JsonProperty(value = "username",required = true)
-        public final String username;
-
-        @JsonProperty(value = "password", required = true)
-        public final String password;
-
-        @JsonProperty(value = "move", required = true)
-        public final MoveType moveType;
-
-        public AuthMove(@JsonProperty("username") String username,
-                        @JsonProperty("password") String password,
-                        @JsonProperty("move") MoveType moveType) {
-            this.username = username;
-            this.password = password;
-            this.moveType = moveType;
-        }
-    }
-
     @GET
     @Produces(MediaType.TEXT_HTML)
     public ArenaView showBattleArena() {
@@ -65,10 +44,9 @@ public class GameController {
 
     @POST
     @Path("/playrandom/")
+    @RolesAllowed("valid_player")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameContent playAgainstRandomComputer(AuthMove moveMade) throws Exception {
-
-        getPlayerCredential(moveMade);
+    public GameContent playAgainstRandomComputer(MoveMade moveMade) throws Exception {
         GameContent gameContent = resultService.performRandomGameForUser(
                 MoveMade.newBuilder()
                         .withUsername(moveMade.username)
@@ -77,18 +55,13 @@ public class GameController {
         return gameContent;
     }
 
-    private void getPlayerCredential(AuthMove moveMade) throws Exception {
-        if (!playerService.validatePlayerPassword(moveMade.username, moveMade.password)) {
-            throw new Exception("can't find player " + moveMade.username);
-        }
-    }
 
     @POST
     @Path("/playpattern")
+    @RolesAllowed("valid_player")
     @Produces(MediaType.APPLICATION_JSON)
-    public GameContent playAgainstPatternMatchingComputer(AuthMove moveMade) throws Exception {
-        // Should be done in the filter layer.
-        getPlayerCredential(moveMade);
+    public GameContent playAgainstPatternMatchingComputer(MoveMade moveMade) throws Exception {
+        // Should be done in the filter layer. <-- Woot now done
         GameContent gameContent = resultService.performPatternMatchedGame(
                 MoveMade.newBuilder()
                         .withUsername(moveMade.username)
@@ -96,4 +69,5 @@ public class GameController {
                         .build());
         return gameContent;
     }
+
 }
