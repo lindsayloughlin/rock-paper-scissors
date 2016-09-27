@@ -32,6 +32,7 @@ public class GameContent {
         return gameTime;
     }
 
+    @JsonIgnore
     public String getPlayerOneUsername() {
         if (playerOneMove != null) {
             return playerOneMove.username;
@@ -39,6 +40,7 @@ public class GameContent {
         return null;
     }
 
+    @JsonIgnore
     public String getPlayerOneMoveType() {
         if (playerOneMove != null) {
             return playerOneMove.moveType.name();
@@ -46,6 +48,7 @@ public class GameContent {
         return null;
     }
 
+    @JsonIgnore
     public String getPlayerTwoUsername() {
         if (playerTwoMove != null) {
             return playerTwoMove.username;
@@ -53,6 +56,7 @@ public class GameContent {
         return null;
     }
 
+    @JsonIgnore
     public String getPlayerTwoMoveType() {
         if (playerTwoMove != null) {
             return playerTwoMove.moveType.name();
@@ -60,6 +64,7 @@ public class GameContent {
         return null;
     }
 
+    @JsonIgnore
     public String getPlayerOneResult() {
         if (resultType != null) {
             return resultType.name();
