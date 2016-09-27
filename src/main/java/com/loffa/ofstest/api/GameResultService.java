@@ -8,6 +8,7 @@ import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
 import com.loffa.ofstest.core.enums.GameResultType;
 import com.loffa.ofstest.core.enums.MoveType;
+import com.loffa.ofstest.dao.GameDao;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -24,11 +25,13 @@ import java.util.Random;
  */
 public class GameResultService {
 
-    PersistenceService persistenceService;
+    //PersistenceService persistenceService;
 
-    public GameResultService(PersistenceService persistenceService) {
-        this.persistenceService = persistenceService;
-        this.gameResults = persistenceService.getGames();
+    final GameDao gameDao;
+    public GameResultService(GameDao gameDao) {
+        this.gameDao = gameDao;
+        //this.persistenceService = persistenceService;
+        //this.gameResults = persistenceService.getGames();
     }
 
     private List<GameContent> gameResults = new ArrayList<>();
@@ -127,10 +130,12 @@ public class GameResultService {
                 .withPlayerOneMove(playerOne)
                 .withPlayerTwoMove(playerTwo)
                 .withResultType(doesFirstBeatSecond(playerOne.moveType, playerTwo.moveType))
-                .withGameType(DateTime.now())
+                .withGameTime(DateTime.now())
                 .build();
         gameResults.add(gameContent);
-        persistenceService.saveToDefaultFile();
+
+        gameDao.insert(gameContent);
+        //persistenceService.saveToDefaultFile();
         return gameContent;
     }
 

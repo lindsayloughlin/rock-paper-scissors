@@ -7,6 +7,8 @@ import com.loffa.ofstest.api.PlayerService;
 import com.loffa.ofstest.auth.UserAuthenticator;
 import com.loffa.ofstest.auth.UserAuthorizer;
 import com.loffa.ofstest.core.User;
+import com.loffa.ofstest.dao.GameDao;
+import com.loffa.ofstest.dao.PlayerDao;
 import com.loffa.ofstest.health.PSRHealthChecker;
 import io.dropwizard.auth.AuthDynamicFeature;
 import com.loffa.ofstest.resources.GameController;
@@ -14,9 +16,13 @@ import com.loffa.ofstest.resources.PlayerController;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.hibernate.HibernateBundle;
+import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.skife.jdbi.v2.DBI;
 
 public class PaperScissorsRock extends Application<PlayerScissorsRockConfiguration> {
 
@@ -39,6 +45,14 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
 
     }
 
+//    private final HibernateBundle<ServerConfiguration> hibernate = new HibernateBundle<>(Person.class) {
+//        @Override
+//        public DataSourceFactory getDataSourceFactory(ExampleConfiguration configuration) {
+//            return configuration.getDataSourceFactory();
+//        }
+//    };
+
+
     @Override
     public void run(final PlayerScissorsRockConfiguration configuration,
                     final Environment environment) {
@@ -57,13 +71,20 @@ public class PaperScissorsRock extends Application<PlayerScissorsRockConfigurati
                 .setRealm("Authorized player section")
                 .buildAuthFilter()));
 
+        final DBIFactory factory = new DBIFactory();
+
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+        final PlayerDao playerDao = jdbi.onDemand(PlayerDao.class);
+        final GameDao gameDao = jdbi.onDemand(GameDao.class);
+        //final PersonResource personResource = new PersonResource(personDAO);
+
 
         PersistenceService instance = new PersistenceService(environment.getObjectMapper());
         instance.loadDataFromJson();
 
-        PlayerService playerService = new PlayerService(instance);
+        PlayerService playerService = new PlayerService(playerDao);
         environment.jersey().register(new PlayerController(playerService));
-        environment.jersey().register(new GameController(new GameResultService(instance), playerService));
+        environment.jersey().register(new GameController(new GameResultService(gameDao), playerService));
     }
 
 }

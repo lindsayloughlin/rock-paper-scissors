@@ -7,11 +7,13 @@ import com.loffa.ofstest.api.PlayerService;
 import com.loffa.ofstest.core.GameContent;
 import com.loffa.ofstest.core.MoveMade;
 import com.loffa.ofstest.core.enums.MoveType;
+import com.loffa.ofstest.dao.GameDao;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 import javax.ws.rs.client.Entity;
@@ -31,9 +33,11 @@ public class GameControllerTest {
 
     public final static PersistenceService persistenceService = new PersistenceService(new ObjectMapper());
     public final static PlayerService playerService = mock(PlayerService.class);
-    @ClassRule
-    public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new GameController(new GameResultService(persistenceService),
+    public GameDao gameDao = mock(GameDao.class);
+
+    @Rule
+    public final ResourceTestRule resources = ResourceTestRule.builder()
+            .addResource(new GameController(new GameResultService(gameDao),
                             playerService)
             ).build();
 

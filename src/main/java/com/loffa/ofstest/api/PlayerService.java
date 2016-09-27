@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.loffa.ofstest.core.Player;
+import com.loffa.ofstest.dao.PlayerDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +19,16 @@ import java.util.Map;
 public class PlayerService {
 
 
-    final List<Player> validPlayers;
-    final PersistenceService persistenceService;
+    final PlayerDao playerDao;
+    //final List<Player> validPlayers;
+    //final PersistenceService persistenceService;
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
-    public PlayerService(PersistenceService persistenceService) {
-        this.validPlayers = persistenceService.getPlayers();
-        this.persistenceService = persistenceService;
-        LOGGER.debug("Created player service with players: " + validPlayers);
+    public PlayerService(PlayerDao persistenceService) {
+        //this.validPlayers = persistenceService.getPlayers();
+        playerDao = persistenceService;
+        //this.persistenceService = persistenceService;
+        //LOGGER.debug("Created player service with players: " + validPlayers);
     }
 
 
@@ -35,10 +38,12 @@ public class PlayerService {
     }
 
     public List<Player> getValidPlayers() {
-        return validPlayers;
+        return playerDao.getAll();
     }
 
     public Map<String, Player> getPlayersMap() {
+
+        List<Player> validPlayers = playerDao.getAll();
         return Maps.uniqueIndex(validPlayers, new Function<Player, String>() {
             @Nullable
             @Override
@@ -60,8 +65,9 @@ public class PlayerService {
             return validatePlayerPassword(player.username, player.password);
         }
 
-        validPlayers.add(player);
-        persistenceService.saveToDefaultFile();
+        playerDao.insert(player);
+        //validPlayers.add(player);
+        //persistenceService.saveToDefaultFile();
         return true;
     }
 

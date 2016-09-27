@@ -8,6 +8,7 @@ import com.loffa.ofstest.core.HighScore;
 import com.loffa.ofstest.core.MoveMade;
 import com.loffa.ofstest.core.enums.GameResultType;
 import com.loffa.ofstest.core.enums.MoveType;
+import com.loffa.ofstest.dao.GameDao;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,17 +17,20 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 /**
  * Created by lloughlin on 11/09/2016.
  */
 public class GameResultServiceTest {
 
     GameResultService resultService;
+    GameDao gameDao = mock(GameDao.class);
 
     @Before()
     public void setupGameService()
     {
-        resultService = new GameResultService(new PersistenceService(new ObjectMapper()));
+        resultService = new GameResultService(gameDao);
     }
 
     @Test
@@ -62,8 +66,8 @@ public class GameResultServiceTest {
                         .withPlayerTwoMove(MoveMade.newBuilder()
                                         .withUsername("old-player")
                                         .build()
-                        ).withGameType(lastYear)
-                .build());
+                        ).withGameTime(lastYear)
+                        .build());
         List<GameContent> gamesPlayedUpHoursAgo = resultService.getGamesPlayedUpHoursAgo(1);
         Assert.assertTrue(gamesPlayedUpHoursAgo.isEmpty());
 
@@ -75,7 +79,7 @@ public class GameResultServiceTest {
         List<GameContent> gameResults = resultService.getGameResults();
         gameResults.add(
                 GameContent.newBuilder()
-                        .withGameType((new DateTime()).minusMinutes(59))
+                        .withGameTime((new DateTime()).minusMinutes(59))
                         .build()
         );
 

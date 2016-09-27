@@ -1,15 +1,18 @@
 package com.loffa.ofstest;
 
-import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import freemarker.template.Configuration;
 import io.dropwizard.db.DataSourceFactory;
-import org.hibernate.validator.constraints.*;
 
+import javax.activation.DataSource;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import org.skife.jdbi.v2.DBI;
 
-public class PlayerScissorsRockConfiguration extends Configuration {
-    // TODO: implement service configuration
+/**
+ * Created by lloughlin on 22/09/2016.
+ */
+public class ServerConfiguration extends Configuration {
 
     @Valid
     @NotNull
@@ -21,8 +24,7 @@ public class PlayerScissorsRockConfiguration extends Configuration {
     }
 
     @JsonProperty("database")
-    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-        this.database = dataSourceFactory;
+    public void setDataSourceFactory(DataSourceFactory factory) {
+        this.database = factory;
     }
-
 }
