@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Player {
 
+
+
+
     @JsonCreator
     public Player(@JsonProperty("username") String username, @JsonProperty("password")String password) {
         this.username = username;
@@ -21,6 +24,7 @@ public class Player {
     public String getPassword() {
         return password;
     }
+
 
     @JsonProperty("username")
     public final String username;

@@ -2,3 +2,25 @@ logging:
   level: INFO
   loggers:
     com.loffa.ofs: DEBUG
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8095
+  adminConnectors:
+    - type: http
+      port: 8096
+
+database:
+
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: postgres
+  url: jdbc:postgresql://192.168.99.100/game
+
+#    properties:
+#        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+#        hibernate.hbm2ddl.auto: create
+
